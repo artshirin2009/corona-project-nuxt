@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Nuxt SSR</a>
+
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <nuxt-link no-prefetch exact active-class="active" class="nav-link" to="/">Home</nuxt-link>
+        </li>
+        <li class="nav-item">
+          <nuxt-link no-prefetch active-class="active" class="nav-link" to="/about">About</nuxt-link>
+        </li>
+        <li class="nav-item">
+          <nuxt-link no-prefetch active-class="active" class="nav-link" to="/users">Users</nuxt-link>
+        </li>
+        <li class="nav-item" v-if="!hasToken">
+          <nuxt-link no-prefetch active-class="active" class="nav-link" to="/login">Login</nuxt-link>
+        </li>
+        <li class="nav-item" v-else>
+          <a @click.prevent="logout" class="nav-link" href="#">Logout</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >Страны</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ul>
+              <li v-for="country of countries" :key="country.id">
+                <a class="dropdown-item" :href="country.alias">{{country.title}}</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
