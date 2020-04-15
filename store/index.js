@@ -1,21 +1,24 @@
 
 export const state = () => ({
-  token: null,
+  categories: [],
+  categoriesPerCity: [],
+  initial: { cookies: {} },
   countries: [],
   cities: [],
   users: [],
-  initial: false,
-  userData: {},
-  categories:[]
+  cookies: []
+
 })
 
 export const mutations = {
-
-  setToken(state, token) {
-    state.token = token
+  setCategories(state, categories) {
+    state.categories = categories
   },
-  clearToken(state) {
-    state.token = null
+  setCategoriesPerCity(state, categoriesPerCity) {
+    state.categoriesPerCity = categoriesPerCity
+  },
+  setInitial(state, initial) {
+    state.initial = initial
   },
   setCountries(state, countries) {
     state.countries = countries
@@ -26,22 +29,15 @@ export const mutations = {
   setUsers(state, users) {
     state.users = users
   },
-  setInitial(state, initial) {
-    state.initial = initial
+  setCookies(state, cookies) {
+    state.cookies = cookies
   },
-  setUserData(state, userData) {
-    state.userData = userData
-  },
-  setCategories(state, categories) {
-    state.categories = categories
-  },
+
 }
 
 export const actions = {
   nuxtServerInit({ commit }) {
-
     return Promise.resolve(
-
       this.$axios.$get(`/api/countries`)
         .then(countries => {
           commit('setCountries', countries)
@@ -58,34 +54,39 @@ export const actions = {
         .then(categories => {
           commit('setCategories', categories)
         })
-    );
+        .then(() => {
+          return this.$axios.$get(`/api/service/cookies`)
+        })
 
+        .then(cookie => {
+          if (cookie) {
+            let initial = {}
+            initial.cookies = this.$cookies.getAll()
+            commit('setInitial', initial);
+            return initial.cookies.city
+          }
+        })
+        
+
+    );
   },
+
   getUsers({ commit }) {
     return Promise.resolve(this.$axios.$get('https://jsonplaceholder.typicode.com/users')
       .then(users => { commit('setUsers', users) }))
   },
-  login({ commit }) {
-    commit('setToken', 'truetoken')
-  },
-  logout({ commit }) {
-    commit('clearToken')
-  },
-  initialAction({ commit }) {
-    commit('setInitial', false)
-  },
-  userData({ commit }, userData) {
-    commit('setUserData', userData)
+  getCookies({ commit }, cookies) {
+    commit('setCookies', cookies)
   }
 }
 
 export const getters = {
-  hasToken: s => !!s.token,
+  initial: s => s.initial,
   countries: s => s.countries,
   cities: s => s.cities,
   users: s => s.users,
-  initial: s => s.initial,
-  userData: s => s.userData,
-  categories: s => s.categories
+  categories: s => s.categories,
+  categoriesPerCity: s => s.categoriesPerCity,
+  cookies: s => s.cookies
 }
 

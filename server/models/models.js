@@ -4,6 +4,7 @@ const Model = Sequelize.Model;
 class Country extends Model { }
 class City extends Model { }
 class Category extends Model { }
+class Cookie extends Model { }
 
 Country.init({
     title: {
@@ -47,6 +48,7 @@ City.init({
 
 Country.hasMany(City);
 
+
 Category.init({
     title: {
         type: Sequelize.STRING,
@@ -66,6 +68,23 @@ Category.init({
     timestamps: false,
     sequelize
 });
+City.hasMany(Category);
+
+Cookie.init({
+    cookie: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true,
+        allowNull: false,
+    },
+    
+}, {
+    modelName: 'cookie',
+    underscored: true,
+    freezeTableName: true,
+    timestamps: false,
+    sequelize
+});
+
 
 
 async function createTables() {
@@ -76,12 +95,15 @@ async function createTables() {
     //     //{ force: true }
     // )
     await Category.sync(
-        //{ force: true }
+    //  { force: true }
     )
+    // await Cookie.sync(
+    //     {force:true}
+    // )
     console.log('done');
 }
- //createTables();
+ createTables();
 
 module.exports = {
-    Country, City, Category
+    Country, City, Category, Cookie
 }

@@ -48,10 +48,22 @@ module.exports = {
     '@nuxtjs/auth',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
+    'cookie-universal-nuxt',
 
   ],
   auth: {
-    // Options
+    strategies: {
+      local: {
+        endpoints: {
+          //login: { url: '/api/auth/login', method: 'post', propertyName: 'token' },
+          logout: { url: '/api/auth/logout', method: 'post' },
+          user: { url: '/api/auth/user', method: 'get', propertyName: 'user' },
+          //login: { url: '/api/cities/', method: 'post', propertyName: 'city' }
+        },
+        // tokenRequired: true,
+        // tokenType: 'bearer',
+      }
+    }
   },
   /*
   ** Axios module configuration

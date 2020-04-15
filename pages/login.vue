@@ -8,7 +8,7 @@
       <v-text-field v-model="authData.email" :rules="rules" label="E-mail" required></v-text-field>
       <v-text-field v-model="authData.password" :rules="rules" label="Password" required></v-text-field>
       <v-col class="text-right">
-        <v-btn color="success" @click="userLogin">Авторизация</v-btn>
+        <v-btn color="success" @click="requestLogin">Авторизация</v-btn>
       </v-col>
     </v-form>
   </v-card>
@@ -29,20 +29,16 @@ export default {
   }),
 
   methods: {
-    userLogin() {
-      // let sysData = this.authData
-      // this.$auth
-      //   .loginWith('local', { data: sysData })
-      //   .then(res => {
-      //     console.log(sysData)
-      //   })
-      //   .catch(err => {
-      //     console.log(err)
-      //   })
-      console.log("Logged")
-    },
+    requestLogin () {
+      this.$auth.loginWith('local', {
+        data: {
+          email: this.authData.email,
+          password: this.authData.password
+        }
+      })
+    }
+  ,
     validate() {
-      console.log(this.authData)
       this.$refs.form.validate()
     }
   }

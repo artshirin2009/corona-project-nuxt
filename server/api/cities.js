@@ -4,17 +4,9 @@ const controller = require('../controllers/admin/cities/index')
 
 var router = express.Router();
 
-/* GET home page. */
-// router.get('/', function (req, res, next) {
-//   res.json({
-//     country: 'OK'
-//   });
-// });
-
 router.get('/', controller.getAll);
 
-// router.get('/:id', controller.getOne);
-//router.post('/', controller.create);
+router.get('/:id', controller.getOne);
 
 // router.delete('/', controller.delete);
 

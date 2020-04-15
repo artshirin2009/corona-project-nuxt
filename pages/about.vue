@@ -7,7 +7,7 @@
 
 <script>
 export default {
- middleware:['auth1'],
+//  middleware:['auth1'],
 }
 </script>
 

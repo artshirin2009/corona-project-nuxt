@@ -1,6 +1,11 @@
 const express = require('express')
 const consola = require('consola')
-const { Nuxt, Builder } = require('nuxt')
+const { Nuxt, Builder } = require('nuxt');
+const bodyParser = require('body-parser');
+
+
+
+
 const app = express()
 
 // Import and Set Nuxt.js options
@@ -27,10 +32,16 @@ async function start () {
   const citiesRouter = require('./api/cities');
   const categoriesRouter = require('./api/categories');
   const authRouter = require('./api/auth');
+  const serviceRouter = require('./api/service');
+
+  app.use(bodyParser.json())
+  
   app.use('/api/countries', countriesRouter);
   app.use('/api/cities', citiesRouter);
   app.use('/api/categories', categoriesRouter);
-  app.use('/api/auth/', authRouter)
+  app.use('/api/auth/', authRouter);
+  app.use('/api/service/', serviceRouter);
+
   app.use(nuxt.render)
 
 

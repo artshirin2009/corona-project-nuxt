@@ -12,7 +12,7 @@ var router = express.Router();
 // });
 
 router.get('/', controller.getAll);
-
+router.get('/:alias', controller.getByCityId)
 // router.get('/:id', controller.getOne);
 //router.post('/', controller.create);
 

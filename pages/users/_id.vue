@@ -19,7 +19,6 @@ export default {
         
         return axios.get(`https://jsonplaceholder.typicode.com/users/${params.id}`)
        .then((res) => {
-           console.log(res.data)
          return { user: res.data }
       })
     },
